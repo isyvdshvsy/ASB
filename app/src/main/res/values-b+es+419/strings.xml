@@ -22,6 +22,9 @@
     <string name="invalid_file">Archivo no válido</string>
     <string name="missing_title_key">Faltan las title keys</string>
     <string name="incomplete_prod_keys">No se encontraron las product keys </string>
+    <!-- Picture-In-Picture -->
+    <string name="pause">Pausa</string>
+    <string name="mute">Mute</string>
     <!-- Settings - Content -->
     <string name="content">Contenido</string>
     <string name="open_data_directory">Ver directorio interno</string>
@@ -108,6 +111,8 @@
     <string name="force_max_gpu_clocks">Forzar Velocidad Máxima de GPU</string>
     <string name="force_max_gpu_clocks_desc">Fuerza la GPU a correr a la máxima velocidad de reloj posible (Puede causar calentamiento y uso de batería excesivos) </string>
     <string name="force_max_gpu_clocks_desc_unsupported">Tu dispositivo no permite aumentar la velocidad del GPU</string>
+    <string name="free_guest_texture_memory">Liberar memoria de texturas huéspedes</string>
+    <string name="free_guest_texture_memory_desc">Permite que las texturas huéspedes (del juego) sean liberadas de la memoria cuando no sean necesarias (rara vez podría causar cuelgues)</string>
     <string name="shader_cache">Desactivar caché de shaders</string>
     <string name="shader_cache_disabled">No se cargarán los shaders en caché. Podría causar tartamudeo</string>
     <string name="shader_cache_enabled">Se cargarán los shaders en caché. Podría reducir bastante el tartamudeo </string>
@@ -151,6 +156,8 @@
     <string name="osc_feedback">Habilitar Vibración de Respuesta</string>
     <string name="osc_feedback_description">Excluye los joysticks y los controles físicos </string>
     <string name="osc_edit">Editar disposición de los controles táctiles </string>
+    <string name="osc_text_color">Color del texto</string>
+    <string name="osc_background_color">Color del fondo</string>
     <string name="setup_guide">Guía de configuración</string>
     <string name="setup_guide_description">Mapear secuencialmente cada joystick y botón</string>
     <string name="joystick">Joystick </string>
@@ -248,4 +255,5 @@
     <!--suppress AndroidLintUnusedResources -->
     <string name="expand_button_title" tools:override="true">Expandir</string>
     <string name="undo">Deshacer</string>
+    <string name="per_game_settings_active_message">Se activaron los ajustes específicos del juego</string>
 </resources>

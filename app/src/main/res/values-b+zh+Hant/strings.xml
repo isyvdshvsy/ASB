@@ -22,6 +22,9 @@
     <string name="invalid_file">無效的文件</string>
     <string name="missing_title_key">缺少title prod密匙</string>
     <string name="incomplete_prod_keys">密匙不完整</string>
+    <!-- Picture-In-Picture -->
+    <string name="pause">暫停</string>
+    <string name="mute">靜音</string>
     <!-- Settings - Content -->
     <string name="content">內容</string>
     <string name="open_data_directory">檢視內部目錄</string>
@@ -108,6 +111,8 @@
     <string name="force_max_gpu_clocks">強制最大 GPU 時鐘</string>
     <string name="force_max_gpu_clocks_desc">強制 GPU 以最大可能時鐘速度運行（可能導致過熱和耗電）</string>
     <string name="force_max_gpu_clocks_desc_unsupported">您的設備不支持強制最大 GPU 時鐘</string>
+    <string name="free_guest_texture_memory">閑置訪客紋理內存</string>
+    <string name="free_guest_texture_memory_desc">允許訪客紋理數據在不需要時從內存中釋放（很少會導致崩潰）</string>
     <string name="shader_cache">禁用著色器緩存</string>
     <string name="shader_cache_disabled">緩存的著色器不會被加載，會導致卡頓</string>
     <string name="shader_cache_enabled">緩存的著色器將被加載，可以大大減少卡頓</string>
@@ -151,6 +156,8 @@
     <string name="osc_feedback">啟用觸覺振動反饋</string>
     <string name="osc_feedback_description">不包括搖桿和硬件控制</string>
     <string name="osc_edit">修改熒幕按鍵佈局</string>
+    <string name="osc_text_color">字體顏色</string>
+    <string name="osc_background_color">背景顏色</string>
     <string name="setup_guide">設置指南</string>
     <string name="setup_guide_description">依次設置每個搖桿和按鍵</string>
     <string name="joystick">搖桿</string>
@@ -248,4 +255,5 @@
     <!--suppress AndroidLintUnusedResources -->
     <string name="expand_button_title" tools:override="true">展開</string>
     <string name="undo">撤銷</string>
+    <string name="per_game_settings_active_message">每個遊戲的設置都是有效的</string>
 </resources>

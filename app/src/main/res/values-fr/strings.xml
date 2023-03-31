@@ -1,12 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Common -->
-    <string name="search">Chercher</string>
+    <string name="search">Rechercher</string>
     <string name="error">Une erreur est survenue</string>
     <string name="copied_to_clipboard">Copié dans le presse-papier</string>
     <string name="emulator">Émulateur</string>
     <!-- Toolbar Main -->
     <string name="settings">Paramètres</string>
-    <string name="share_logs">Partager les logs</string>
+    <string name="share_logs">Partager le log</string>
     <string name="refresh">Rafraîchir</string>
     <!-- Toolbar - Share Logs -->
     <string name="log_share_prompt">Partager le fichier de log</string>
@@ -22,6 +22,9 @@
     <string name="invalid_file">Fichier invalide</string>
     <string name="missing_title_key">Clé de titres manquante</string>
     <string name="incomplete_prod_keys">Clé de production incomplète</string>
+    <!-- Picture-In-Picture -->
+    <string name="pause">Pause</string>
+    <string name="mute">Muet</string>
     <!-- Settings - Content -->
     <string name="content">Contenu</string>
     <string name="open_data_directory">Afficher le dossier interne</string>
@@ -108,6 +111,8 @@
     <string name="force_max_gpu_clocks">Forcer la fréquence maximale du GPU</string>
     <string name="force_max_gpu_clocks_desc">Force le GPU à fonctionner à sa fréquence maximale (peut causer une surchauffe et une consommation d\'énergie excessive)</string>
     <string name="force_max_gpu_clocks_desc_unsupported">L\'appareil ne permet pas de forcer la fréquence maximale du GPU</string>
+    <string name="free_guest_texture_memory">Libérer la mémoire des textures du jeu</string>
+    <string name="free_guest_texture_memory_desc">Autorise les textures utilisées par le jeu à être effacées de la mémoire quand ça n\'est pas nécessaire (peut rarement causer des crashs)</string>
     <string name="shader_cache">Désactiver le cache des shaders</string>
     <string name="shader_cache_disabled">Les shaders stockés dans le cache ne seront pas chargés, causera des ralentissements</string>
     <string name="shader_cache_enabled">Les shaders stockés dans le cache seront chargés, peut réduire significativement les ralentissements</string>
@@ -151,6 +156,8 @@
     <string name="osc_feedback">Activer le retour haptique</string>
     <string name="osc_feedback_description">Les contrôles des joysticks et du matériel sont désactivés</string>
     <string name="osc_edit">Éditer les contrôles sur l\'écran</string>
+    <string name="osc_text_color">Couleur du texte</string>
+    <string name="osc_background_color">Couleur de l\'arrière-plan</string>
     <string name="setup_guide">Guide de démarrage</string>
     <string name="setup_guide_description">Mapper séquentiellement chaque stick et bouton</string>
     <string name="joystick">Joystick</string>
@@ -248,4 +255,5 @@
     <!--suppress AndroidLintUnusedResources -->
     <string name="expand_button_title" tools:override="true">Développer</string>
     <string name="undo">Annuler</string>
+    <string name="per_game_settings_active_message">Les paramètres personnalisés sont activés</string>
 </resources>

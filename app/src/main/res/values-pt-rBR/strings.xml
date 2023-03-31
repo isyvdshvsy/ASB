@@ -20,8 +20,11 @@
     <string name="play">Jogar</string>
     <string name="searching_roms">Buscando por ROMs</string>
     <string name="invalid_file">Arquivo inválido </string>
-    <string name="missing_title_key">Arquivo title.keys faltando</string>
-    <string name="incomplete_prod_keys">Arquivo prod.keys incompleto</string>
+    <string name="missing_title_key">Chaves de Título faltando</string>
+    <string name="incomplete_prod_keys">Chaves de Produção incompletas</string>
+    <!-- Picture-In-Picture -->
+    <string name="pause">Pausar</string>
+    <string name="mute">Mutar</string>
     <!-- Settings - Content -->
     <string name="content">Conteúdo</string>
     <string name="open_data_directory">Ver Diretório Interno</string>
@@ -30,8 +33,8 @@
     <string name="search_location">Local de Busca</string>
     <!-- Settings - Keys -->
     <string name="keys">Chaves de Decriptação</string>
-    <string name="prod_keys">Arquivo prod.keys</string>
-    <string name="title_keys">Arquivo title.keys</string>
+    <string name="prod_keys">Chaves de Produção</string>
+    <string name="title_keys">Chaves de Título </string>
     <string name="import_keys_success">Chaves de Decriptação importadas com sucesso</string>
     <string name="import_keys_invalid_input_path">O caminho para as chaves fornecidas é inválido</string>
     <string name="import_keys_invalid_keys">As chaves que você tentou importar são inválidas</string>
@@ -74,7 +77,7 @@
     <string name="display">Exibição</string>
     <string name="perf_stats">Exibir Estatísticas de Desempenho</string>
     <string name="perf_stats_desc_off">Estastísticas de Desempenho não serão exibidas</string>
-    <string name="perf_stats_desc_on">Estatísticas de Desempenho sersão exibidas no canto superior esquerdo</string>
+    <string name="perf_stats_desc_on">Estatísticas de Desempenho serão exibidas no canto superior esquerdo</string>
     <string name="max_refresh_rate">Use a Taxa Máxima de Atualização da Tela</string>
     <string name="max_refresh_rate_enabled">Define a taxa de atualização da tela para a mais alta possível (vai quebrar a maioria dos jogos)</string>
     <string name="max_refresh_rate_disabled">Define a taxa de atualização da tela para 60Hz</string>
@@ -96,18 +99,20 @@
     <string name="force_triple_buffering">Forçar Buffer Triplo</string>
     <string name="triple_buffering_enabled">Utilize pelo menos três buffers em cadeia de troca (FPS mais altos, porém há mais atraso de entrada)</string>
     <string name="triple_buffering_disabled">Utilize pelo menos dois buffers em cadeia de troca (FPS mais baixos, mas há menos atraso de entrada)</string>
-    <string name="disable_frame_throttling">Desabilitar o Limitador de Quadros</string>
+    <string name="disable_frame_throttling">Desabilitar Limite de Quadros</string>
     <string name="disable_frame_throttling_enabled">O jogo pode rodar o mais rápido possível (somente para benchmarking) <b>Nota:</b>Um método alternativo é utilizado para medir o FPS com isso habilitado, os valores não devem ser comparados aos valores de FPS limitados</string>
-    <string name="disable_frame_throttling_disabled">Permitir que o jogo rode de acordo com a taxa de atualização da tela do seu dispositivo</string>
+    <string name="disable_frame_throttling_disabled">Permite que o jogo rode de acordo com a taxa de atualização da tela do seu dispositivo</string>
     <string name="executor_slot_count_scale">Escala de Contagem de Slots do Executor</string>
     <string name="executor_slot_count_scale_desc">Escala controlando o número máximo de execuções simultâneas da GPU (mais alto às vezes pode ter um desempenho melhor, mas usará mais RAM)</string>
     <string name="executor_flush_threshold">Limite de Descarga do Executor</string>
     <string name="executor_flush_threshold_desc">Controla a frequência com que o trabalho é descarregado para a GPU</string>
     <string name="use_direct_memory_import">Usar Importação Direta da Memória</string>
-    <string name="use_direct_memory_import_desc">Pode alterar o desempenho e estabilidade em alguns jogos\n<b>NOTA:</b>Esta opção funciona apenas em drivers proprietários Adreno</string>
+    <string name="use_direct_memory_import_desc">Pode alterar o desempenho e estabilidade em alguns jogos\n<b>NOTA:</b> Esta opção funciona apenas em drivers proprietários Adreno</string>
     <string name="force_max_gpu_clocks">Forçar Frequência Máxima da GPU</string>
     <string name="force_max_gpu_clocks_desc">Força a GPU a rodar na sua maior frequência possível (Pode causar calor e consumo de energia excessivos)</string>
     <string name="force_max_gpu_clocks_desc_unsupported">Seu disponível não suportar forçar a frequência máxima da GPU</string>
+    <string name="free_guest_texture_memory">Liberar Memória de Texturas do Hóspede</string>
+    <string name="free_guest_texture_memory_desc">Permite que os dados de texturas do aplicativo/jogo emulado sejam liberados da memória quando desnecessários (Pode raramente causar quebras)</string>
     <string name="shader_cache">Desabilitar Cache de Shader</string>
     <string name="shader_cache_disabled">Shaders armazenados em cache não serão carregadas, resultará em engasgos</string>
     <string name="shader_cache_enabled">Shaders armazenados em cache serão carregadas, pode reduzir fortemente os engasgos</string>
@@ -151,6 +156,8 @@
     <string name="osc_feedback">Habilitar Feedback Tátil</string>
     <string name="osc_feedback_description">Exclui os joysticks e controles físicos</string>
     <string name="osc_edit">Editar esquema de controles na tela</string>
+    <string name="osc_text_color">Cor do Texto</string>
+    <string name="osc_background_color">Cor de Fundo</string>
     <string name="setup_guide">Guia de Configuração</string>
     <string name="setup_guide_description">Mapeia em sequência todos os analógicos e botões</string>
     <string name="joystick">Joystick</string>
@@ -230,7 +237,7 @@
     <string name="rangev3_description">Range v3 é uma implementação de referência de intervalos ISO C++ 20, isso nos permite utilizar intervalos enquanto eles são desenvolvidos em libc++ do LLVM</string>
     <string name="frozen_description">Frozen fornece mapas de hash imutáveis em tempo de compilação com função de hash perfeita para pesquisas mais rápidas</string>
     <string name="pugixml_description">pugixml é utilizado para analisar o XML de preferência para recuperar configurações do C++</string>
-    <string name="opus_description">O Codec de Áudio Opus fornece um decodificador Opus de alta qualidade utilizado para decodificar áudio codificado em Opus fornecido pelo convidado</string>
+    <string name="opus_description">O Codec de Áudio Opus fornece um decodificador Opus de alta qualidade utilizado para decodificar áudio codificado em Opus fornecido pelo hóspede</string>
     <string name="mbedtls_description">Mbed TLS é utilizado para descriptografar NCAs criptografados em AES</string>
     <string name="lz4_description">LZ4 é utilizado para extrair seções de ELF compactadas em LZ4 a partir de um NSO</string>
     <string name="tzcode_description">tzcode fornece uma API C para acessar tzdb para dados de fuso horário</string>
@@ -248,4 +255,5 @@
     <!--suppress AndroidLintUnusedResources -->
     <string name="expand_button_title" tools:override="true">Expandir</string>
     <string name="undo">Desfazer</string>
+    <string name="per_game_settings_active_message">Configurações Por-Jogo Estão Ativas</string>
 </resources>

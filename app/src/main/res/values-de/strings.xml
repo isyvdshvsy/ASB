@@ -3,6 +3,7 @@
     <string name="search">Suche</string>
     <string name="error">Ein Fehler ist aufgetreten</string>
     <string name="copied_to_clipboard">In die Zwischenablage kopiert</string>
+    <string name="emulator">Emulator</string>
     <!-- Toolbar Main -->
     <string name="settings">Einstellungen</string>
     <string name="share_logs">Logs teilen</string>
@@ -21,42 +22,15 @@
     <string name="invalid_file">Ungültige Datei</string>
     <string name="missing_title_key">Title Key fehlt</string>
     <string name="incomplete_prod_keys">Production Keys unvollständig</string>
-    <!-- Settings - Emulator -->
-    <string name="emulator">Emulator</string>
-    <string name="search_location">ROM Ordner</string>
+    <!-- Picture-In-Picture -->
+    <string name="pause">Pausieren</string>
+    <string name="mute">Stumm</string>
+    <!-- Settings - Content -->
+    <string name="content">Inhalt</string>
     <string name="open_data_directory">Öffne App-Ordner</string>
     <string name="open_data_directory_summary">Öffnet Skylines internen Ordner in einem Dateimanager</string>
-    <string name="failed_open_directory">Es wurde kein Dateimanager zum Anzeigen des internen Ordners von Skyline gefunden</string>
-    <string name="theme">Theme</string>
-    <string name="layout_type">Spieldarstellung</string>
-    <string name="group_by_format">Gruppiere Spiele nach Format</string>
-    <string name="group_by_format_desc_off">Spiele werden in einer einzigen Liste angezeigt</string>
-    <string name="group_by_format_desc_on">Spiele werden nach ihrem Dateiformat gruppiert</string>
-    <string name="sort_apps_by">Spielesortierung</string>
-    <string name="select_action">Spielinformationen immer anzeigen</string>
-    <string name="select_action_desc_on">Spielinformationen werden beim Antippen eines Spiels angezeigt </string>
-    <string name="select_action_desc_off">Spielinformationen werden nur angezeigt, wenn ein Spiel länger angetippt wird</string>
-    <string name="perf_stats">Leistungsstatistiken anzeigen</string>
-    <string name="shader_cache">Deaktiviere Shader Cache</string>
-    <string name="perf_stats_desc_off">Leistungsstatistiken werden ausgeblendet</string>
-    <string name="perf_stats_desc_on">Leistungsstatistiken werden in der oberen linken Ecke angezeigt</string>
-    <string name="shader_cache_disabled">Gespeicherte Shader werden nicht geladen, führt zu Ruckeln</string>
-    <string name="shader_cache_enabled">Gespeicherte Shader werden geladen, kann Ruckeln deutlich vermindern</string>
-    <string name="log_level">Log Stufe</string>
-    <string name="gpu_driver_config">GPU Treiber Konfiguration</string>
-    <string name="gpu_driver_config_desc">Aktiver Treiber: %1$s</string>
-    <string name="gpu_driver_config_desc_unsupported">Dein Gerät unterstützt keine anderen Treiber</string>
-    <string name="app_language">App-Sprache</string>
-    <string name="app_language_default">Verwende Systemsprache</string>
-    <!-- Settings - System -->
-    <string name="system">System</string>
-    <string name="use_docked">Verwende Docked Modus</string>
-    <string name="handheld_enabled">Das System emuliert im Handheld Modus</string>
-    <string name="docked_enabled">Das System emuliert im gedockten Modus</string>
-    <string name="username">Benutzername</string>
-    <string name="profile_picture">Profilbild</string>
-    <string name="system_language">Systemsprache</string>
-    <string name="system_region">Systemregion</string>
+    <string name="open_data_directory_failed">Es wurde kein Dateimanager gefunden, um Skyline\'s internen Ordner zu öffnen</string>
+    <string name="search_location">ROM Ordner</string>
     <!-- Settings - Keys -->
     <string name="keys">Keys</string>
     <string name="prod_keys">Production Keys</string>
@@ -66,22 +40,68 @@
     <string name="import_keys_invalid_keys">Die Keys, die du importieren wolltest, sind ungültig</string>
     <string name="import_keys_delete_previous_failed">Die derzeit installierten Keys konnten nicht gelöscht werden</string>
     <string name="import_keys_move_failed">Die Keys konnten nicht in das interne Verzeichnis verschoben werden</string>
+    <!-- Settings - Appearance -->
+    <string name="appearance">Aussehen</string>
+    <string name="theme">Theme</string>
+    <string name="app_language">App-Sprache</string>
+    <string name="app_language_default">Verwende Systemsprache</string>
+    <string name="layout_type">Spieldarstellung</string>
+    <string name="sort_apps_by">Spielesortierung</string>
+    <string name="group_by_format">Gruppiere Spiele nach Format</string>
+    <string name="group_by_format_desc_off">Spiele werden in einer einzigen Liste angezeigt</string>
+    <string name="group_by_format_desc_on">Spiele werden nach ihrem Dateiformat gruppiert</string>
+    <string name="select_action">Spielinformationen immer anzeigen</string>
+    <string name="select_action_desc_on">Spielinformationen werden beim Antippen eines Spiels angezeigt </string>
+    <string name="select_action_desc_off">Spielinformationen werden nur angezeigt, wenn ein Spiel länger angetippt wird</string>
+    <!-- Settings - Game -->
+    <string name="game">Spiel</string>
+    <string name="use_custom_settings">Aktiviere benutzerdefinierte Einstellungen</string>
+    <string name="use_custom_settings_desc_on">Benutzerdefinierte Einstellungen sind für dieses Spiel aktiviert</string>
+    <string name="use_custom_settings_desc_off">Benutzerdefinierte Einstellungen sind fü dieses Spiel deaktiviert</string>
+    <string name="reset_custom_settings">Setze benutzerdefinierte Einstellungen zurück</string>
+    <string name="reset_custom_settings_desc">Setze benutzerdefinierte Einstellungen auf Standartwerte zurück</string>
+    <string name="reset_settings_warning">Bist du sicher, dass du alle Einstellungen auf die Standartwerte zurücksetzen möchtest? <b>Aktuelle Einstellungen gehen dabei verloren</b></string>
+    <string name="copy_global_settings">Kopiere globale Einstellungen</string>
+    <string name="copy_global_settings_desc">Kopiere globale Einstellungen für dieses Spiel</string>
+    <string name="copy_global_settings_warning">Bist du sicher, dass du globale Einstellungen für dieses Spiel kopieren möchtest? <b>Aktuelle Einstellungen gehen dabei verloren</b></string>
+    <!-- Settings - System -->
+    <string name="system">System</string>
+    <string name="use_docked">Verwende Docked Modus</string>
+    <string name="handheld_enabled">Das System emuliert im Handheld Modus</string>
+    <string name="docked_enabled">Das System emuliert im gedockten Modus</string>
+    <string name="username">Benutzername</string>
+    <string name="profile_picture">Profilbild</string>
+    <string name="system_language">Systemsprache</string>
+    <string name="system_region">Systemregion</string>
     <!-- Settings - Display -->
     <string name="display">Darstellung</string>
+    <string name="perf_stats">Leistungsstatistiken anzeigen</string>
+    <string name="perf_stats_desc_off">Leistungsstatistiken werden ausgeblendet</string>
+    <string name="perf_stats_desc_on">Leistungsstatistiken werden in der oberen linken Ecke angezeigt</string>
+    <string name="max_refresh_rate">Benutze höchste Bildwiederholungsrate</string>
+    <string name="max_refresh_rate_enabled">Setzt die Bildwiederholungsrate so hoch wie möglich (Die meisten Spiele funktionieren so nicht richtig)</string>
+    <string name="max_refresh_rate_disabled">Legt die Bildwiederholungsrate auf 60Hz fest</string>
     <string name="screen_orientation">Bildschirmausrichtung</string>
+    <string name="aspect_ratio">Seitenverhältnis</string>
+    <string name="respect_display_cutout">Bildschirmausschnitt respektieren</string>
+    <string name="respect_display_cutout_enabled">UI Elemente nicht im Ausschnittbereich anzeigen</string>
+    <string name="respect_display_cutout_disabled">UI Elemente dürfen im Ausschnittbereich angezeigt werden</string>
+    <!-- Settings - Audio -->
+    <string name="audio">Audio</string>
+    <string name="disable_audio_output">Audioausgabe deaktivieren</string>
+    <string name="disable_audio_output_enabled">Audioausgabe ist deaktiviert</string>
+    <string name="disable_audio_output_disabled">Audioausgabe ist aktiviert</string>
+    <!-- Settings - GPU -->
+    <string name="gpu">GPU</string>
+    <string name="gpu_driver_config">GPU Treiber Konfiguration</string>
+    <string name="gpu_driver_config_desc">Aktiver Treiber: %1$s</string>
+    <string name="gpu_driver_config_desc_unsupported">Dein Gerät unterstützt keine anderen Treiber</string>
     <string name="force_triple_buffering">Erzwinge Dreifaches Buffering</string>
     <string name="triple_buffering_enabled">Wende mindestens drei Swapchain Buffer an (Höhere FPS, aber auch höhere Eingabeverzögerung)</string>
     <string name="triple_buffering_disabled">Wende mindestens zwei Swapchain Buffer an (Niedrigere FPS, aber auch weniger Eingabeverzögerung)</string>
     <string name="disable_frame_throttling">Deaktiviere Frame Throttling</string>
     <string name="disable_frame_throttling_enabled">Das Spiel kann Bilder so schnell wie möglich darstellen (Nur für Benchmarks)\n\n<b>Anmerkung:</b> Die FPS werden anders berechnet, wenn dieses Feature aktiviert ist, und die Werte sollten nicht mit gedrosselten FPS Werten verglichen werden</string>
     <string name="disable_frame_throttling_disabled">Erlaube dem Spiel Bilder nur in der eingestellten Bildwiederholungsrate darzustellen</string>
-    <string name="max_refresh_rate">Benutze höchste Bildwiederholungsrate</string>
-    <string name="max_refresh_rate_enabled">Setzt die Bildwiederholungsrate so hoch wie möglich (Die meisten Spiele funktionieren so nicht richtig)</string>
-    <string name="max_refresh_rate_disabled">Legt die Bildwiederholungsrate auf 60Hz fest</string>
-    <string name="aspect_ratio">Seitenverhältnis</string>
-    <string name="respect_display_cutout">Bildschirmausschnitt respektieren</string>
-    <string name="respect_display_cutout_enabled">UI Elemente nicht im Ausschnittbereich anzeigen</string>
-    <string name="respect_display_cutout_disabled">UI Elemente dürfen im Ausschnittbereich angezeigt werden</string>
     <string name="executor_slot_count_scale">Skala für die Ausführer-Slots</string>
     <string name="executor_slot_count_scale_desc">Eine Skala, die die maximale Anzahl der gleichzeitigen GPU-Ausführungen steuert (eine höhere Anzahl kann manchmal besser sein, verbraucht aber mehr RAM)</string>
     <string name="executor_flush_threshold">Ausführer-Transfergrenzwert</string>
@@ -91,23 +111,26 @@
     <string name="force_max_gpu_clocks">Erzwinge maximale GPU Taktraten</string>
     <string name="force_max_gpu_clocks_desc">Zwingt die GPU, mit der maximal möglichen Taktrate zu laufen (kann zu exzessiver Wärmeentwicklung und erhöhtem Energieverbrauch führen) </string>
     <string name="force_max_gpu_clocks_desc_unsupported">Dein Gerät unterstützt das Erzwingen der maximalen GPU Taktraten nicht</string>
+    <string name="free_guest_texture_memory">Freigeben des Gast-Texturspeichers</string>
+    <string name="free_guest_texture_memory_desc">Ermöglicht das Freigeben von Gast-Texturdaten aus dem Speicher, wenn sie nicht benötigt werden (Kann selten zu Abstürzen führen)</string>
+    <string name="shader_cache">Deaktiviere Shader Cache</string>
+    <string name="shader_cache_disabled">Gespeicherte Shader werden nicht geladen, führt zu Ruckeln</string>
+    <string name="shader_cache_enabled">Gespeicherte Shader werden geladen, kann Ruckeln deutlich vermindern</string>
     <!-- Settings - Hacks -->
     <string name="hacks">Hacks</string>
-    <string name="enable_fast_gpu_readback">Aktiviere schnelle GPU Rück-Lesung</string>
+    <string name="enable_fast_gpu_readback">Aktiviere Schnelle GPU-Rücklesung</string>
     <string name="enable_fast_gpu_readback_enabled">Schnelle GPU Rück-Lesung ist aktiviert (Wird in manchen Spielen Fehler verursachen, aber in anderen Spielen für eine bessere Leistung sorgen)</string>
     <string name="enable_fast_gpu_readback_disabled">Schnelle GPU Rück-Lesung ist deaktiviert (Sorgt für die höchste Genauigkeit)</string>
+    <string name="enable_fast_readback_writes">Schnelle Rücklesung-Schreibvorgänge ermöglichen</string>
+    <string name="enable_fast_readback_writes_enabled">Schnelle Rücklesung-Schreibvorgänge sind aktiviert</string>
+    <string name="enable_fast_readback_writes_disabled">Schnelle Rücklesung-Schreibvorgänge sind deaktiviert</string>
     <string name="disable_subgroup_shuffle">Deaktiviere GPU Untergruppenmischung</string>
     <string name="disable_subgroup_shuffle_enabled">Operationen zur Shader Untergruppenmischung sind deaktiviert, kann zu starken grafischen Fehlern führen </string>
     <string name="disable_subgroup_shuffle_disabled">Operationen zur Shader Untergruppenmischung sind aktiviert, gewährleistet maximale Genauigkeit </string>
-
-    <!-- Settings - Audio -->
-    <string name="audio">Audio</string>
-    <string name="disable_audio_output">Audioausgabe deaktivieren</string>
-    <string name="disable_audio_output_enabled">Audioausgabe ist deaktiviert</string>
-    <string name="disable_audio_output_disabled">Audioausgabe ist aktiviert</string>
     <!-- Settings - Debug -->
     <string name="debug">Debug</string>
-    <string name="validation_layer">Aktiviere Validierungs-Layer</string>
+    <string name="log_level">Log Stufe</string>
+    <string name="validation_layer">Aktiviere Validation Layer</string>
     <string name="validation_layer_enabled">Der Validierungs-Layer von Vulkan ist aktiviert, wodurch Verlangsamungen zu erwarten sind</string>
     <string name="validation_layer_disabled">Der Validierungs-Layer von Vulkan ist deaktiviert</string>
     <!-- Gpu Driver Activity -->
@@ -133,6 +156,8 @@
     <string name="osc_feedback">Aktiviere Haptisches Feedback</string>
     <string name="osc_feedback_description">Schließt Joystick und Hardwaresteuerungen aus </string>
     <string name="osc_edit">Editiere Layout der Touch-Eingaben</string>
+    <string name="osc_text_color">Textfarbe</string>
+    <string name="osc_background_color">Hintergrundfarbe</string>
     <string name="setup_guide">Konfigurationsguide</string>
     <string name="setup_guide_description">Alle Sticks und Tasten der Reihe nach einrichten</string>
     <string name="joystick">Joystick</string>
@@ -230,4 +255,5 @@
     <!--suppress AndroidLintUnusedResources -->
     <string name="expand_button_title" tools:override="true">Erweitern</string>
     <string name="undo">Rückgängig</string>
+    <string name="per_game_settings_active_message">Pro-Spiel Einstellungen sind aktiv</string>
 </resources>
