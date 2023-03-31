@@ -98,22 +98,8 @@ class MainActivity : AppCompatActivity() {
     private fun AppItem.toViewItem() = AppViewItem(layoutType, this, ::selectStartGame, ::selectShowGameDialog)
 
     override fun onCreate(savedInstanceState : Bundle?) {
-        // Need to create new instance of settings, dependency injection happens
-        AppCompatDelegate.setDefaultNightMode(
-            when ((AppSettings(this).appTheme)) {
-                0 -> AppCompatDelegate.MODE_NIGHT_NO
-                1 -> AppCompatDelegate.MODE_NIGHT_YES
-                2 -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
-            }
-        )
-        super.onCreate(savedInstanceState)
 
-// 添加开始
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val keysDir = getDir("keys", MODE_PRIVATE)
+val keysDir = getDir("keys", MODE_PRIVATE)
         if (!keysDir.exists()) {
             keysDir.mkdir()
 
@@ -129,6 +115,17 @@ class MainActivity : AppCompatActivity() {
             outputStream.close()
             inputStream.close()
         }
+
+        // Need to create new instance of settings, dependency injection happens
+        AppCompatDelegate.setDefaultNightMode(
+            when ((AppSettings(this).appTheme)) {
+                0 -> AppCompatDelegate.MODE_NIGHT_NO
+                1 -> AppCompatDelegate.MODE_NIGHT_YES
+                2 -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
+            }
+        )
+        super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
         WindowCompat.setDecorFitsSystemWindows(window, false)
