@@ -53,25 +53,7 @@ import java.io.OutputStream
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    fun copyAssetsToFilesDir() {
-
-    val inputStream : InputStream = assets.open("prod.keys")
-    val outputFile = File(filesDir, "prod.keys")
-    if (!outputFile.parentFile.exists()) {
-        outputFile.parentFile.mkdirs()
-    }
-    val outputStream : OutputStream = FileOutputStream(outputFile)
-    inputStream.copyTo(outputStream)
-    inputStream.close()
-    outputStream.close()
-
-    val keysDir = getDir("keys", Context.MODE_PRIVATE)
-    if (!keysDir.exists()) {
-        keysDir.mkdir()
-    }
-}
-
+ 
     companion object {
         private val formatOrder = listOf(RomFormat.NSP, RomFormat.XCI, RomFormat.NRO, RomFormat.NSO, RomFormat.NCA)
     }
@@ -141,6 +123,24 @@ settings, dependency injection happens
 
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
+
+fun copyAssetsToFilesDir(context: Context) {
+
+    val inputStream: InputStream = context.assets.open("prod.keys")
+    val outputFile = File(context.filesDir, "prod.keys")
+    if (!outputFile.parentFile.exists()) {
+        outputFile.parentFile.mkdirs()
+    }
+    val outputStream: OutputStream = FileOutputStream(outputFile)
+    inputStream.copyTo(outputStream)
+    inputStream.close()
+    outputStream.close()
+
+    val keysDir = context.getDir("keys", Context.MODE_PRIVATE)
+    if (!keysDir.exists()) {
+        keysDir.mkdir()
+    }
+}
 
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
