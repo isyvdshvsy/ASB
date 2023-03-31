@@ -116,6 +116,25 @@ class MainActivity : AppCompatActivity() {
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
+// 添加开始
+        val keysDir = getDir("keys", MODE_PRIVATE)
+        if (!keysDir.exists()) {
+            keysDir.mkdir()
+
+            // 复制内置文件
+            // 注意路径需要适当调整
+            val inputStream = assets.open("prod.keys")
+            val outputStream = FileOutputStream(File(keysDir, "prod.keys"))
+            val buffer = ByteArray(1024)
+            var length: Int
+            while (inputStream.read(buffer).also { length = it } > 0) {
+                outputStream.write(buffer, 0, length)
+            }
+            outputStream.close()
+            inputStream.close()
+        }
+        // 添加结束
+
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
                 appSettings.romFormatFilter = romFormat?.let { formatOrder.indexOf(romFormat) + 1 } ?: 0
