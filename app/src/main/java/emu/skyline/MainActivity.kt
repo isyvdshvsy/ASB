@@ -53,6 +53,21 @@ import java.io.OutputStream
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    val inputStream: InputStream = assets.open("prod.keys")
+val outputFile = File(filesDir, "prod.keys")
+if (!outputFile.parentFile.exists()) {
+    outputFile.parentFile.mkdirs()
+    }
+val outputStream: OutputStream = FileOutputStream(outputFile)
+inputStream.copyTo(outputStream)
+inputStream.close()
+outputStream.close()
+
+val keysDir = getDir("keys", Context.MODE_PRIVATE)
+if (!keysDir.exists()) {
+    keysDir.mkdir()
+    }
+
     companion object {
         private val formatOrder = listOf(RomFormat.NSP, RomFormat.XCI, RomFormat.NRO, RomFormat.NSO, RomFormat.NCA)
     }
@@ -110,20 +125,6 @@ class MainActivity : AppCompatActivity() {
                 1 -> AppCompatDelegate.MODE_NIGHT_YES
                 2 -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
-
-    val inputStream : InputStream = assets.open("example.txt")
-    val outputFile = File(filesDir, "example.txt")
-    if (!outputFile.parentFile.exists()) {
-        outputFile.parentFile.mkdirs()
-    }
-    val outputStream : OutputStream = FileOutputStream(outputFile)
-    inputStream.copyTo(outputStream)
-    inputStream.close()
-    outputStream.close()
-
-    val keysDir = getDir("keys", Context.MODE_PRIVATE)
-    if (!keysDir.exists()) {
-        keysDir.mkdir()
             }
         )
         super.onCreate(savedInstanceState)
