@@ -98,24 +98,6 @@ class MainActivity : AppCompatActivity() {
     private fun AppItem.toViewItem() = AppViewItem(layoutType, this, ::selectStartGame, ::selectShowGameDialog)
 
     override fun onCreate(savedInstanceState : Bundle?) {
-
-val keysDir = getDir("keys", MODE_PRIVATE)
-        if (!keysDir.exists()) {
-            keysDir.mkdir()
-
-            // 复制内置文件
-            // 注意路径需要适当调整
-            val inputStream = assets.open("prod.keys")
-            val outputStream = FileOutputStream(File(keysDir, "prod.keys"))
-            val buffer = ByteArray(1024)
-            var length: Int
-            while (inputStream.read(buffer).also { length = it } > 0) {
-                outputStream.write(buffer, 0, length)
-            }
-            outputStream.close()
-            inputStream.close()
-        }
-
         // Need to create new instance of settings, dependency injection happens
         AppCompatDelegate.setDefaultNightMode(
             when ((AppSettings(this).appTheme)) {
