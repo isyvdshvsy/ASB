@@ -118,25 +118,6 @@ settings, dependency injection happens
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
-
-private fun copyAssetToPrivateDir(assetName: String) {
-    val targetFile = File(filesDir, assetName)
-    if (targetFile.exists()) {
-        return
-    }
-    try {
-        assets.open(assetName).use { inputStream ->
-            FileOutputStream(targetFile).use { outputStream ->
-                inputStream.copyTo(outputStream)
-            }
-        }
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
-}
-
-// 将 "test.txt" 文件从 assets 复制到应用私有目录
-copyAssetToPrivateDir("prod.keys")
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
