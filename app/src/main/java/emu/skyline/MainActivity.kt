@@ -118,20 +118,31 @@ settings, dependency injection happens
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+
+private fun copyAssetToPrivateDir(assetName: String) {
+    val targetFile = File(filesDir, assetName)
+    if (targetFile.exists()) {
+        return
+    }
+    try {
+        assets.open(assetName).use { inputStream ->
+            FileOutputStream(targetFile).use { outputStream ->
+                inputStream.copyTo(outputStream)
+            }
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+// 将 "test.txt" 文件从 assets 复制到应用私有目录
+copyAssetToPrivateDir("prod.keys")
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
-// 检查应用私有目录是否存在并自动创建文件夹
-        val appFolder = File(applicationContext.filesDir, "keys")
-        if (!appFolder.exists()) {
-            appFolder.mkdir()
-        }
-
-        // 复制内置文件到应用私有目录
-        copyAssetToPrivateDir("prod.keys")
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
                 appSettings.romFormatFilter = romFormat?.let { formatOrder.indexOf(romFormat) + 1 } ?: 0
