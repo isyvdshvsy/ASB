@@ -114,29 +114,64 @@ settings, dependency injection happens
                 else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
             }
         )
+fun copyAssetsToFilesDir() {
+
+    val inputStream : InputStream = assets.open("prod.keys")
+    val outputFile = File(filesDir, "prod.keys")
+    if (!outputFile.parentFile.exists()) {
+        outputFile.parentFile.mkdirs()
+    }
+    val outputStream : OutputStream = FileOutputStream(outputFile)
+    inputStream.copyTo(outputStream)
+    inputStream.close()
+    outputStream.close()
+
+    val keysDir = getDir("keys", Context.MODE_PRIVATE)
+    if (!keysDir.exists()) {
+        keysDir.mkdir()
+    }
+}
         super.onCreate(savedInstanceState)
+
 
         setContentView(binding.root)
 
+fun copyAssetsToFilesDir() {
+
+    val inputStream : InputStream = assets.open("prod.keys")
+    val outputFile = File(filesDir, "prod.keys")
+    if (!outputFile.parentFile.exists()) {
+        outputFile.parentFile.mkdirs()
+    }
+    val outputStream : OutputStream = FileOutputStream(outputFile)
+    inputStream.copyTo(outputStream)
+    inputStream.close()
+    outputStream.close()
+
+    val keysDir = getDir("keys", Context.MODE_PRIVATE)
+    if (!keysDir.exists()) {
+        keysDir.mkdir()
+    }
+}
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
-fun copyAssetsToFilesDir(context: Context) {
+fun copyAssetsToFilesDir() {
 
-    val inputStream: InputStream = context.assets.open("prod.keys")
-    val outputFile = File(context.filesDir, "prod.keys")
+    val inputStream : InputStream = assets.open("prod.keys")
+    val outputFile = File(filesDir, "prod.keys")
     if (!outputFile.parentFile.exists()) {
         outputFile.parentFile.mkdirs()
     }
-    val outputStream: OutputStream = FileOutputStream(outputFile)
+    val outputStream : OutputStream = FileOutputStream(outputFile)
     inputStream.copyTo(outputStream)
     inputStream.close()
     outputStream.close()
 
-    val keysDir = context.getDir("keys", Context.MODE_PRIVATE)
+    val keysDir = getDir("keys", Context.MODE_PRIVATE)
     if (!keysDir.exists()) {
         keysDir.mkdir()
     }
