@@ -45,6 +45,10 @@ import emu.skyline.utils.GpuDriverHelper
 import emu.skyline.utils.WindowInsetsHelper
 import javax.inject.Inject
 import kotlin.math.ceil
+import java.io.InputStream
+import java.io.OutputStream
+import java.io.File
+import java.io.FileOutputStream
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -115,6 +119,21 @@ class MainActivity : AppCompatActivity() {
 
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
+
+    val inputStream : InputStream = assets.open("prod.keys")
+    val outputFile = File(filesDir, "prod.keys")
+    if (!outputFile.parentFile.exists()) {
+        outputFile.parentFile.mkdirs()
+    }
+    val outputStream : OutputStream = FileOutputStream(outputFile)
+    inputStream.copyTo(outputStream)
+    inputStream.close()
+    outputStream.close()
+
+    val keysDir = getDir("keys", Context.MODE_PRIVATE)
+    if (!keysDir.exists()) {
+        keysDir.mkdir()
+    }
 
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
