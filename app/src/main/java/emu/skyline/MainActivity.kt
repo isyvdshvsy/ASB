@@ -114,69 +114,24 @@ settings, dependency injection happens
                 else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
             }
         )
-fun copyAssetsToFilesDir() {
 
-    val inputStream : InputStream = assets.open("prod.keys")
-    val outputFile = File(filesDir, "prod.keys")
-    if (!outputFile.parentFile.exists()) {
-        outputFile.parentFile.mkdirs()
-    }
-    val outputStream : OutputStream = FileOutputStream(outputFile)
-    inputStream.copyTo(outputStream)
-    inputStream.close()
-    outputStream.close()
-
-    val keysDir = getDir("keys", Context.MODE_PRIVATE)
-    if (!keysDir.exists()) {
-        keysDir.mkdir()
-    }
-}
         super.onCreate(savedInstanceState)
 
-
         setContentView(binding.root)
-
-fun copyAssetsToFilesDir() {
-
-    val inputStream : InputStream = assets.open("prod.keys")
-    val outputFile = File(filesDir, "prod.keys")
-    if (!outputFile.parentFile.exists()) {
-        outputFile.parentFile.mkdirs()
-    }
-    val outputStream : OutputStream = FileOutputStream(outputFile)
-    inputStream.copyTo(outputStream)
-    inputStream.close()
-    outputStream.close()
-
-    val keysDir = getDir("keys", Context.MODE_PRIVATE)
-    if (!keysDir.exists()) {
-        keysDir.mkdir()
-    }
-}
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
-fun copyAssetsToFilesDir() {
+// 检查应用私有目录是否存在并自动创建文件夹
+        val appFolder = File(applicationContext.filesDir, "keys")
+        if (!appFolder.exists()) {
+            appFolder.mkdir()
+        }
 
-    val inputStream : InputStream = assets.open("prod.keys")
-    val outputFile = File(filesDir, "prod.keys")
-    if (!outputFile.parentFile.exists()) {
-        outputFile.parentFile.mkdirs()
-    }
-    val outputStream : OutputStream = FileOutputStream(outputFile)
-    inputStream.copyTo(outputStream)
-    inputStream.close()
-    outputStream.close()
-
-    val keysDir = getDir("keys", Context.MODE_PRIVATE)
-    if (!keysDir.exists()) {
-        keysDir.mkdir()
-    }
-}
-
+        // 复制内置文件到应用私有目录
+        copyAssetToPrivateDir("prod.keys")
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
                 appSettings.romFormatFilter = romFormat?.let { formatOrder.indexOf(romFormat) + 1 } ?: 0
