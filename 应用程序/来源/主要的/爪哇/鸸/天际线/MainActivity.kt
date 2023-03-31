@@ -115,27 +115,28 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        val inputStream : InputStream =   assets.open("prod.keys")
-        val outputFile = File(filesDir, "prod.keys")
-        if (!outputFile.parentFile.exists()) {
-        outputFile.parentFile.mkdirs()
-     }
-        val outputStream : OutputStream = FileOutputStream(outputFile)
-        inputStream.copyTo(outputStream)
-        inputStream.close()
-        outputStream.close()
-
-        val keysDir = getDir("keys", Context.MODE_PRIVATE)
-        if (!keysDir.exists()) {
-        keysDir.mkdir()
-    }
-
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
+    val inputStream : InputStream = assets.open("example.txt")
+    val outputFile = File(filesDir, "example.txt")
+    if (!outputFile.parentFile.exists()) {
+        outputFile.parentFile.mkdirs()
+    }
+
+    val outputStream : OutputStream = FileOutputStream(outputFile)
+    inputStream.copyTo(outputStream)
+    inputStream.close()
+    outputStream.close()
+
+    // 创建 keys 目录
+    val keysDir = getDir("keys", Context.MODE_PRIVATE)
+    if (!keysDir.exists()) {
+        keysDir.mkdir()
+    }
 
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
