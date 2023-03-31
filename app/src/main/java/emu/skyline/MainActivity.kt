@@ -104,7 +104,27 @@ class MainActivity : AppCompatActivity() {
     private fun AppItem.toViewItem() = AppViewItem(layoutType, this, ::selectStartGame, ::selectShowGameDialog)
 
     override fun onCreate(savedInstanceState : Bundle?) {
-        // Need to create new instance of settings, dependency injection happens
+        // Need to create new instance of 
+ 
+fun copyAssetsToFilesDir(context: Context) {
+
+    val inputStream: InputStream = context.assets.open("prod.keys")
+    val outputFile = File(context.filesDir, "prod.keys")
+    if (!outputFile.parentFile.exists()) {
+        outputFile.parentFile.mkdirs()
+    }
+    val outputStream: OutputStream = FileOutputStream(outputFile)
+    inputStream.copyTo(outputStream)
+    inputStream.close()
+    outputStream.close()
+
+    val keysDir = context.getDir("keys", Context.MODE_PRIVATE)
+    if (!keysDir.exists()) {
+        keysDir.mkdir()
+    }
+}
+
+settings, dependency injection happens
         AppCompatDelegate.setDefaultNightMode(
             when ((AppSettings(this).appTheme)) {
                 0 -> AppCompatDelegate.MODE_NIGHT_NO
@@ -117,23 +137,6 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-fun copyAssetsToFilesDir() {
-
-    val inputStream : InputStream = assets.open("prod.keys")
-    val outputFile = File(filesDir, "prod.keys")
-    if (!outputFile.parentFile.exists()) {
-        outputFile.parentFile.mkdirs()
-    }
-    val outputStream : OutputStream = FileOutputStream(outputFile)
-    inputStream.copyTo(outputStream)
-    inputStream.close()
-    outputStream.close()
-
-    val keysDir = getDir("keys", Context.MODE_PRIVATE)
-    if (!keysDir.exists()) {
-        keysDir.mkdir()
-    }
-}
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
