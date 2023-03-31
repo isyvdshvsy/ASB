@@ -109,14 +109,10 @@ class MainActivity : AppCompatActivity() {
         )
         super.onCreate(savedInstanceState)
 
-        setContentView(binding.root)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
-
-        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
-        PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
-
 // 添加开始
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         val keysDir = getDir("keys", MODE_PRIVATE)
         if (!keysDir.exists()) {
             keysDir.mkdir()
@@ -133,7 +129,14 @@ class MainActivity : AppCompatActivity() {
             outputStream.close()
             inputStream.close()
         }
-        // 添加结束
+
+        setContentView(binding.root)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
+
+        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
+        PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
+
 
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
