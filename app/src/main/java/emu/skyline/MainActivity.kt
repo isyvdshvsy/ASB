@@ -98,6 +98,28 @@ class MainActivity : AppCompatActivity() {
     private fun AppItem.toViewItem() = AppViewItem(layoutType, this, ::selectStartGame, ::selectShowGameDialog)
 
     override fun onCreate(savedInstanceState : Bundle?) {
+
+private fun copyBuiltinFileToPrivateDir() {
+    // 内置文件名
+    val filename = "prod.keys"
+    // 获取内置文件
+    val inputStream = applicationContext.assets.open(filename)
+    // 应用私有目录文件路径
+    val privateDirPath = applicationContext.filesDir.path + "/keys/"
+    // 创建应用私有目录
+    val privateDir = File(privateDirPath)
+    if (!privateDir.exists()) {
+        privateDir.mkdir()
+    }
+    // 写入文件
+    val outputFile = File(privateDirPath, filename)
+    val outputStream = FileOutputStream(outputFile)
+    inputStream.use { input ->
+        outputStream.use { output ->
+            input.copyTo(output)
+        }
+    }
+}
         // Need to create new instance of settings, dependency injection happens
         AppCompatDelegate.setDefaultNightMode(
             when ((AppSettings(this).appTheme)) {
@@ -333,27 +355,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-    // 内置文件名
-    val filename = "prod.keys"
-    // 获取内置文件
-    val inputStream = applicationContext.assets.open(filename)
-    // 应用私有目录文件路径
-    val privateDirPath = applicationContext.filesDir.path + "/keys/"
-    // 创建应用私有目录
-    val privateDir = File(privateDirPath)
-    if (!privateDir.exists()) {
-        privateDir.mkdir()
-    }
-    // 写入文件
-    val outputFile = File(privateDirPath, filename)
-    val outputStream = FileOutputStream(outputFile)
-    inputStream.use { input ->
-        outputStream.use { output ->
-            input.copyTo(output)
-        }
-    }
-}
 
         // Try to return to normal GPU clocks upon resuming back to main activity, to avoid GPU being stuck at max clocks after a crash
         GpuDriverHelper.forceMaxGpuClocks(false)
