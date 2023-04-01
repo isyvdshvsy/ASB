@@ -130,20 +130,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-// 复制内置文件到应用的私有目录
-val inputStream = resources.openRawResource(R.raw.file_to_copy)
-val outputStream = openFileOutput("prod.keys", Context.MODE_PRIVATE)
-inputStream.copyTo(outputStream)
-inputStream.close()
-outputStream.close()
-
-// 检查是否存在目录，不存在则自动创建
-val dirName = "keys"
-val directory = File(filesDir, dirName)
-if (!directory.exists()) {
-    directory.mkdir()
-}
-
         setupAppList()
 
         binding.swipeRefreshLayout.apply {
