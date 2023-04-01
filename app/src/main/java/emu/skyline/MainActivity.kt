@@ -111,7 +111,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
+        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
+        PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
+
+private fun copyBuiltinFileToPrivateDir() {
     // 内置文件名
     val filename = "prod.keys"
     // 获取内置文件
@@ -129,11 +135,9 @@ class MainActivity : AppCompatActivity() {
     inputStream.use { input ->
         outputStream.use { output ->
             input.copyTo(output)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
-
-        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
-        PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
+        }
+    }
+}
 
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
