@@ -112,7 +112,6 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-private fun copyBuiltinFileToPrivateDir() {
     // 内置文件名
     val filename = "prod.keys"
     // 获取内置文件
@@ -130,9 +129,6 @@ private fun copyBuiltinFileToPrivateDir() {
     inputStream.use { input ->
         outputStream.use { output ->
             input.copyTo(output)
-        }
-    }
-}
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
