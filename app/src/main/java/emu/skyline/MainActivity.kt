@@ -54,6 +54,28 @@ class MainActivity : AppCompatActivity() {
         private val formatOrder = listOf(RomFormat.NSP, RomFormat.XCI, RomFormat.NRO, RomFormat.NSO, RomFormat.NCA)
     }
 
+    copyAssetFileToPrivateDir("prod.keys")
+
+    private fun copyAssetFileToPrivateDir(fileName: String) {
+    // 获取私有目录路径
+    val targetDir = getDir("asset_files", Context.MODE_PRIVATE)
+    // 在私有目录下创建文件
+    val targetFile = File(targetDir, fileName)
+
+    try {
+        // 检查目标文件是否存在，如果存在则不进行复制操作
+        if (!targetFile.exists()) {
+            // 从 assets 目录下获取文件输入流
+            val inputStream = assets.open(fileName)
+            // 创建输出流并将其写入目标文件
+            FileOutputStream(targetFile).use { outputStream ->
+                inputStream.copyTo(outputStream)
+            }
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+}
 
     private val binding by lazy { MainActivityBinding.inflate(layoutInflater) }
 
