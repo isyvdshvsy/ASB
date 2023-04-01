@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         private val formatOrder = listOf(RomFormat.NSP, RomFormat.XCI, RomFormat.NRO, RomFormat.NSO, RomFormat.NCA)
     }
 
+lateinit var context: Context
+
     private val binding by lazy { MainActivityBinding.inflate(layoutInflater) }
 
     @Inject
@@ -101,6 +103,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState : Bundle?) {
 
+context = applicationContext
+
         // Need to create new instance of settings, dependency injection happens
         AppCompatDelegate.setDefaultNightMode(
             when ((AppSettings(this).appTheme)) {
@@ -110,6 +114,15 @@ class MainActivity : AppCompatActivity() {
                 else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
             }
         )
+
+        super.onCreate(savedInstanceState)
+
+        setContentView(binding.root)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
+
+        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
+        PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
 val context = applicationContext
 
@@ -130,15 +143,6 @@ val writer = FileWriter(file)
 writer.write(inputString)
 writer.flush()
 writer.close()
-
-        super.onCreate(savedInstanceState)
-
-        setContentView(binding.root)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
-
-        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
-        PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
