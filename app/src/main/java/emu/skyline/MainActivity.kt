@@ -57,6 +57,26 @@ class MainActivity : AppCompatActivity() {
         private val formatOrder = listOf(RomFormat.NSP, RomFormat.XCI, RomFormat.NRO, RomFormat.NSO, RomFormat.NCA)
     }
 
+val context = applicationContext
+
+val filename = "test.txt"
+val inputString = context.assets.open(filename).bufferedReader().use { it.readText() }
+
+//获取应用私有目录内部存储路径
+val dir = context.getDir("demo", Context.MODE_PRIVATE)
+val file = File(dir, filename)
+
+if(!file.exists()){
+    //如果文件不存在则创建文件
+    file.createNewFile()
+}
+
+//将读取的内容写入文件中
+val writer = FileWriter(file)
+writer.write(inputString)
+writer.flush()
+writer.close()
+
     private val binding by lazy { MainActivityBinding.inflate(layoutInflater) }
 
     @Inject
@@ -122,33 +142,6 @@ class MainActivity : AppCompatActivity() {
 
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
-
-private fun copyFilesToPrivateDir() {
-    val assetManager = applicationContext.assets
-    val files = assetManager.list("files") ?: return  // 指定 assets 中的子目录 files 包含需要复制的文件
-
-    for (filename in files) {
-        val inputStream = assetManager.open("files/$filename") // 打开 assets 中相应的文件流
-        val targetFile = File(filesDir, filename) 
-
-        if (!targetFile.exists()) {
-            targetFile.parentFile?.mkdirs()
-            targetFile.createNewFile()
-        }
-
-        val outputStream = FileOutputStream(targetFile)
-        var read: Int
-        val buffer = ByteArray(4096)
-
-        while (inputStream.read(buffer).also { read = it } != -1) {
-            outputStream.write(buffer, 0, read)
-        }
-
-        outputStream.flush()
-        outputStream.close()
-        inputStream.close()
-    }
-}
 
 
         adapter.apply {
