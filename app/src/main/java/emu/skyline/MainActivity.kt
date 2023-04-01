@@ -137,25 +137,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
-       
-val filename = "test.txt"
-val inputString = assets.open(filename).bufferedReader().use { it.readText() }
-
-//获取应用私有目录内部存储路径
-val dir = getDir("demo", Context.MODE_PRIVATE)
-val file = File(dir, filename)
-
-if(!file.exists()){
-    //如果文件不存在则创建文件
-    file.createNewFile()
-}
-
-//将读取的内容写入文件中
-val writer = FileWriter(file)
-writer.write(inputString)
-writer.flush()
-writer.close()
- WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
