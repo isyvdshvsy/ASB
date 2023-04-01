@@ -105,6 +105,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState : Bundle?) {
 
+super.onCreate(savedInstanceState)
+    
+    //检测并创建需要复制内置文件的目录
+    val directory = this.getDir("my_files", Context.MODE_PRIVATE)
+    if (!directory.exists()) {
+        directory.mkdirs()
+    }
+
+    //将内置文件复制到应用私有目录
+    val inputFile = resources.openRawResource(R.raw.my_text_file)
+    val outputFile = File(directory, "my_text_file.txt")
+    try {
+        val inputStream = inputFile.bufferedReader().use { it.readText() }
+        outputFile.writeText(inputStream)
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+
         // Need to create new instance of settings, dependency injection happens
         AppCompatDelegate.setDefaultNightMode(
             when ((AppSettings(this).appTheme)) {
@@ -131,15 +149,6 @@ class MainActivity : AppCompatActivity() {
                 formatFilter = romFormat
                 populateAdapter()
             }))
-
-val internalFile = File(filesDir, "internal_file.txt")
-if (!internalFile.exists()) {
-    resources.assets.open("internal_file.txt").use { inputStream ->
-        FileOutputStream(internalFile).use { outputStream ->
-            inputStream.copyTo(outputStream)
-        }
-    }
-}
 
             setOnFilterPublishedListener {
                 binding.appList.post { binding.appList.smoothScrollToPosition(0) }
