@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         private val formatOrder = listOf(RomFormat.NSP, RomFormat.XCI, RomFormat.NRO, RomFormat.NSO, RomFormat.NCA)
     }
 
-lateinit var context: Context
 
     private val binding by lazy { MainActivityBinding.inflate(layoutInflater) }
 
