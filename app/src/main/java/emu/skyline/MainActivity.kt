@@ -105,24 +105,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState : Bundle?) {
 
-super.onCreate(savedInstanceState)
-    
-    //检测并创建需要复制内置文件的目录
-    val directory = this.getDir("my_files", Context.MODE_PRIVATE)
-    if (!directory.exists()) {
-        directory.mkdirs()
-    }
-
-    //将内置文件复制到应用私有目录
-    val inputFile = resources.openRawResource(R.raw.my_text_file)
-    val outputFile = File(directory, "my_text_file.txt")
-    try {
-        val inputStream = inputFile.bufferedReader().use { it.readText() }
-        outputFile.writeText(inputStream)
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-
         // Need to create new instance of settings, dependency injection happens
         AppCompatDelegate.setDefaultNightMode(
             when ((AppSettings(this).appTheme)) {
@@ -142,6 +124,23 @@ super.onCreate(savedInstanceState)
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
+super.onCreate(savedInstanceState)
+    
+    //检测并创建需要复制内置文件的目录
+    val directory = this.getDir("keys", Context.MODE_PRIVATE)
+    if (!directory.exists()) {
+        directory.mkdirs()
+    }
+
+    //将内置文件复制到应用私有目录
+    val inputFile = resources.openRawResource(R.raw.my_text_file)
+    val outputFile = File(directory, "prod.keys")
+    try {
+        val inputStream = inputFile.bufferedReader().use { it.readText() }
+        outputFile.writeText(inputStream)
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
 
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
