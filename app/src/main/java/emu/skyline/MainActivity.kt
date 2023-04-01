@@ -109,11 +109,15 @@ class MainActivity : AppCompatActivity() {
                 2 -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
             }
+        )
+
+val context = applicationContext
+
 val filename = "test.txt"
-val inputString = assets.open(filename).bufferedReader().use { it.readText() }
+val inputString = context.assets.open(filename).bufferedReader().use { it.readText() }
 
 //获取应用私有目录内部存储路径
-val dir = getDir("demo", Context.MODE_PRIVATE)
+val dir = context.getDir("demo", Context.MODE_PRIVATE)
 val file = File(dir, filename)
 
 if(!file.exists()){
@@ -126,7 +130,7 @@ val writer = FileWriter(file)
 writer.write(inputString)
 writer.flush()
 writer.close()
-        )
+
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
