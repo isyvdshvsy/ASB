@@ -99,6 +99,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState : Bundle?) {
 
+        // Need to create new instance of settings, dependency injection happens
+        AppCompatDelegate.setDefaultNightMode(
+            when ((AppSettings(this).appTheme)) {
+                0 -> AppCompatDelegate.MODE_NIGHT_NO
+                1 -> AppCompatDelegate.MODE_NIGHT_YES
+                2 -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
+            }
+        )
+        super.onCreate(savedInstanceState)
+
+        setContentView(binding.root)
+
 private fun copyBuiltinFileToPrivateDir() {
     // 内置文件名
     val filename = "prod.keys"
@@ -120,18 +133,6 @@ private fun copyBuiltinFileToPrivateDir() {
         }
     }
 }
-        // Need to create new instance of settings, dependency injection happens
-        AppCompatDelegate.setDefaultNightMode(
-            when ((AppSettings(this).appTheme)) {
-                0 -> AppCompatDelegate.MODE_NIGHT_NO
-                1 -> AppCompatDelegate.MODE_NIGHT_YES
-                2 -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
-            }
-        )
-        super.onCreate(savedInstanceState)
-
-        setContentView(binding.root)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
