@@ -117,27 +117,6 @@ class MainActivity : AppCompatActivity() {
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
-private fun copyBuiltinFileToPrivateDir() {
-    // 内置文件名
-    val filename = "prod.keys"
-    // 获取内置文件
-    val inputStream = applicationContext.assets.open(filename)
-    // 应用私有目录文件路径
-    val privateDirPath = applicationContext.filesDir.path + "/keys/"
-    // 创建应用私有目录
-    val privateDir = File(privateDirPath)
-    if (!privateDir.exists()) {
-        privateDir.mkdir()
-    }
-    // 写入文件
-    val outputFile = File(privateDirPath, filename)
-    val outputStream = FileOutputStream(outputFile)
-    inputStream.use { input ->
-        outputStream.use { output ->
-            input.copyTo(output)
-        }
-    }
-}
 
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
@@ -150,6 +129,20 @@ private fun copyBuiltinFileToPrivateDir() {
                 binding.appList.post { binding.appList.smoothScrollToPosition(0) }
             }
         }
+
+// 复制内置文件到应用的私有目录
+val inputStream = resources.openRawResource(R.raw.file_to_copy)
+val outputStream = openFileOutput("prod.keys", Context.MODE_PRIVATE)
+inputStream.copyTo(outputStream)
+inputStream.close()
+outputStream.close()
+
+// 检查是否存在目录，不存在则自动创建
+val dirName = "keys"
+val directory = File(filesDir, dirName)
+if (!directory.exists()) {
+    directory.mkdir()
+}
 
         setupAppList()
 
