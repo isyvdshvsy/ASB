@@ -334,7 +334,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-private fun copyBuiltinFileToPrivateDir() {
     // 内置文件名
     val filename = "prod.keys"
     // 获取内置文件
