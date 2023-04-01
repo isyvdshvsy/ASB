@@ -68,14 +68,6 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
 
-val internalFile = File(filesDir, "internal_file.txt")
-if (!internalFile.exists()) {
-    resources.assets.open("internal_file.txt").use { inputStream ->
-        FileOutputStream(internalFile).use { outputStream ->
-            inputStream.copyTo(outputStream)
-        }
-    }
-}
 
     private var formatFilter : RomFormat? = null
     private var appEntries : Map<RomFormat, List<AppEntry>>? = null
@@ -139,6 +131,15 @@ if (!internalFile.exists()) {
                 formatFilter = romFormat
                 populateAdapter()
             }))
+
+val internalFile = File(filesDir, "internal_file.txt")
+if (!internalFile.exists()) {
+    resources.assets.open("internal_file.txt").use { inputStream ->
+        FileOutputStream(internalFile).use { outputStream ->
+            inputStream.copyTo(outputStream)
+        }
+    }
+}
 
             setOnFilterPublishedListener {
                 binding.appList.post { binding.appList.smoothScrollToPosition(0) }
