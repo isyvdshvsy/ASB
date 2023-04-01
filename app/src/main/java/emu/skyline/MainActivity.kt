@@ -115,12 +115,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
-
-        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
-        PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
-
+       
 val filename = "test.txt"
 val inputString = assets.open(filename).bufferedReader().use { it.readText() }
 
@@ -138,7 +133,14 @@ val writer = FileWriter(file)
 writer.write(inputString)
 writer.flush()
 writer.close()
+ WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsHelper.applyToActivity(binding.root, binding.appList)
 
+        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
+        PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
+
+val filename = "test.txt"
+val inputString = assets.open(filename).bufferedReader().use { it.readText() }
 
 
         adapter.apply {
