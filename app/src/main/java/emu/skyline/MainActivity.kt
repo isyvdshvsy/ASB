@@ -43,6 +43,8 @@ import emu.skyline.settings.EmulationSettings
 import emu.skyline.settings.SettingsActivity
 import emu.skyline.utils.GpuDriverHelper
 import emu.skyline.utils.WindowInsetsHelper
+import java.io.File
+import java.io.FileWriter
 import javax.inject.Inject
 import kotlin.math.ceil
 
@@ -117,6 +119,21 @@ class MainActivity : AppCompatActivity() {
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
+val filename = "prod.keys"
+val inputString = assets.open(filename).bufferedReader().use { it.readText() }
+
+val dir = getDir("keys", Context.MODE_PRIVATE)
+val file = File(dir, filename)
+
+if(!file.exists()){
+
+    file.createNewFile()
+}
+
+val writer = FileWriter(file)
+writer.write(inputString)
+writer.flush()
+writer.close()
 
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
