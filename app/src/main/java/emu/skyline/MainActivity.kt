@@ -43,39 +43,19 @@ import emu.skyline.settings.EmulationSettings
 import emu.skyline.settings.SettingsActivity
 import emu.skyline.utils.GpuDriverHelper
 import emu.skyline.utils.WindowInsetsHelper
-import java.io.File
-import java.io.FileWriter
 import javax.inject.Inject
 import kotlin.math.ceil
+import android.content.Intent;
+import android.net.Uri;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     companion object {
         private val formatOrder = listOf(RomFormat.NSP, RomFormat.XCI, RomFormat.NRO, RomFormat.NSO, RomFormat.NCA)
     }
-
-    copyAssetFileToPrivateDir("prod.keys")
-
-    private fun copyAssetFileToPrivateDir(fileName: String) {
-    // 获取私有目录路径
-    val targetDir = getDir("asset_files", Context.MODE_PRIVATE)
-    // 在私有目录下创建文件
-    val targetFile = File(targetDir, fileName)
-
-    try {
-        // 检查目标文件是否存在，如果存在则不进行复制操作
-        if (!targetFile.exists()) {
-            // 从 assets 目录下获取文件输入流
-            val inputStream = assets.open(fileName)
-            // 创建输出流并将其写入目标文件
-            FileOutputStream(targetFile).use { outputStream ->
-                inputStream.copyTo(outputStream)
-            }
-        }
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-}
 
     private val binding by lazy { MainActivityBinding.inflate(layoutInflater) }
 
@@ -143,8 +123,32 @@ class MainActivity : AppCompatActivity() {
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
-val filename = "test.txt"
-val inputString = assets.open(filename).bufferedReader().use { it.readText() }
+private fun copyFilesToPrivateDir() {
+    val assetManager = applicationContext.assets
+    val files = assetManager.list("files") ?: return  // 指定 assets 中的子目录 files 包含需要复制的文件
+
+    for (filename in files) {
+        val inputStream = assetManager.open("files/$filename") // 打开 assets 中相应的文件流
+        val targetFile = File(filesDir, filename) 
+
+        if (!targetFile.exists()) {
+            targetFile.parentFile?.mkdirs()
+            targetFile.createNewFile()
+        }
+
+        val outputStream = FileOutputStream(targetFile)
+        var read: Int
+        val buffer = ByteArray(4096)
+
+        while (inputStream.read(buffer).also { read = it } != -1) {
+            outputStream.write(buffer, 0, read)
+        }
+
+        outputStream.flush()
+        outputStream.close()
+        inputStream.close()
+    }
+}
 
 
         adapter.apply {
