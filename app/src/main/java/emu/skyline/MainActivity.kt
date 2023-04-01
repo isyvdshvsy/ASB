@@ -57,26 +57,6 @@ class MainActivity : AppCompatActivity() {
         private val formatOrder = listOf(RomFormat.NSP, RomFormat.XCI, RomFormat.NRO, RomFormat.NSO, RomFormat.NCA)
     }
 
-val context = applicationContext
-
-val filename = "test.txt"
-val inputString = context.assets.open(filename).bufferedReader().use { it.readText() }
-
-//获取应用私有目录内部存储路径
-val dir = context.getDir("demo", Context.MODE_PRIVATE)
-val file = File(dir, filename)
-
-if(!file.exists()){
-    //如果文件不存在则创建文件
-    file.createNewFile()
-}
-
-//将读取的内容写入文件中
-val writer = FileWriter(file)
-writer.write(inputString)
-writer.flush()
-writer.close()
-
     private val binding by lazy { MainActivityBinding.inflate(layoutInflater) }
 
     @Inject
@@ -87,6 +67,15 @@ writer.close()
     private val layoutType get() = LayoutType.values()[appSettings.layoutType]
 
     private val viewModel by viewModels<MainViewModel>()
+
+val internalFile = File(filesDir, "internal_file.txt")
+if (!internalFile.exists()) {
+    resources.assets.open("internal_file.txt").use { inputStream ->
+        FileOutputStream(internalFile).use { outputStream ->
+            inputStream.copyTo(outputStream)
+        }
+    }
+}
 
     private var formatFilter : RomFormat? = null
     private var appEntries : Map<RomFormat, List<AppEntry>>? = null
