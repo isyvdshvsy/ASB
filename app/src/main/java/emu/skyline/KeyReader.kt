@@ -61,7 +61,10 @@ object KeyReader {
         val tmpOutputFile = File("${outputFile}.tmp")
         var valid = false
 
-        context.contentResolver.openInputStream(uri).use { inputStream ->
+       val outputDirectory = File("${context.filesDir.canonicalFile}/keys/")
+val titleKeysFile = File(outputDirectory, KeyType.Title.fileName)
+val prodKeysFile = File(outputDirectory, KeyType.Prod.fileName)
+ context.contentResolver.openInputStream(uri).use { inputStream ->
             tmpOutputFile.bufferedWriter().use { writer ->
                 valid = inputStream!!.bufferedReader().useLines {
                     for (line in it) {
