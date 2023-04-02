@@ -46,13 +46,21 @@ import emu.skyline.utils.WindowInsetsHelper
 import javax.inject.Inject
 import kotlin.math.ceil
 import android.content.Intent;
-import android.net.Uri;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+fun Context.copyAssetToPrivateDirectory(assetName: String, outputDirName: String) {
+    val inputStream = assets.open(assetName)
+    val outputFile = File(filesDir, outputDirName + File.separator + assetName)
+    val outputStream = FileOutputStream(outputFile)
+
+    inputStream.copyTo(outputStream)
+
+    inputStream.close()
+    outputStream.close()
+}
+
     companion object {
         private val formatOrder = listOf(RomFormat.NSP, RomFormat.XCI, RomFormat.NRO, RomFormat.NSO, RomFormat.NCA)
     }
@@ -105,6 +113,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState : Bundle?) {
 
+copyAssetToPrivateDirectory("myFile.txt", "myAppFolder")
+
         // Need to create new instance of settings, dependency injection happens
         AppCompatDelegate.setDefaultNightMode(
             when ((AppSettings(this).appTheme)) {
@@ -131,23 +141,6 @@ class MainActivity : AppCompatActivity() {
                 populateAdapter()
             }))
 
-super.onCreate(savedInstanceState)
-    
-    //检测并创建需要复制内置文件的目录
-    val directory = this.getDir("keys", Context.MODE_PRIVATE)
-    if (!directory.exists()) {
-        directory.mkdirs()
-    }
-
-    //将内置文件复制到应用私有目录
-    val inputFile = resources.openRawResource(R.raw.my_text_file)
-    val outputFile = File(directory, "prod.keys")
-    try {
-        val inputStream = inputFile.bufferedReader().use { it.readText() }
-        outputFile.writeText(inputStream)
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
 
             setOnFilterPublishedListener {
                 binding.appList.post { binding.appList.smoothScrollToPosition(0) }
