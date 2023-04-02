@@ -53,6 +53,15 @@ object KeyReader {
         if (!DocumentFile.isDocumentUri(context, uri))
             return ImportResult.InvalidInputPath
 
+val outputDirectory = File(context.filesDir, "keys")
+if (!outputDirectory.exists()) {
+    outputDirectory.mkdir()
+}
+val outputFile = File(outputDirectory, "prod.keys")
+val outputStream = FileOutputStream(outputFile)
+inputStream.copyTo(outputStream)
+outputStream.close()
+
         val outputDirectory = File("${context.filesDir.canonicalFile}/keys/")
         if (!outputDirectory.exists())
             outputDirectory.mkdirs()
@@ -61,15 +70,6 @@ object KeyReader {
         val tmpOutputFile = File("${outputFile}.tmp")
         var valid = false
 
-val internalDirPath = "android.resource://${context.packageName}/raw/internal_dir"
-val internalDir = File(internalDirPath)
-val outputDir = File(context.filesDir, "keys")
-if (!outputDir.exists()) outputDir.mkdirs()
-internalDir.listFiles()?.forEach { file ->
-    val outputStream = FileOutputStream(File(outputDir, file.name))
-    file.inputStream().copyTo(outputStream)
-    outputStream.close()
-}
         context.contentResolver.openInputStream(uri).use { inputStream ->
             tmpOutputFile.bufferedWriter().use { writer ->
                 valid = inputStream!!.bufferedReader().useLines {
