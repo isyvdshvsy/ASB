@@ -99,12 +99,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState : Bundle?) {
 
-    val assetManager = applicationContext.assets
-    val inputStream = assetManager.open("prod.keys")
-    val keysData = inputStream.readBytes()
-
-    SkylineKeyManager.loadKeys(keysData)
-
         // Need to create new instance of settings, dependency injection happens
         AppCompatDelegate.setDefaultNightMode(
             when ((AppSettings(this).appTheme)) {
