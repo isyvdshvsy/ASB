@@ -1,14 +1,5 @@
-/*
- * SPDX-License-Identifier: MPL-2.0
- * Copyright © 2020 Skyline Team and Contributors (https://github.com/skyline-emu/)
- */
-
-package emu.skyline
-
 import android.content.Context
-import android.net.Uri
 import android.util.Log
-import androidx.documentfile.provider.DocumentFile
 import java.io.File
 
 object KeyReader {
@@ -22,24 +13,23 @@ object KeyReader {
         MoveFailed,
     }
 
-    enum class KeyType(val keyName : String, val fileName : String) {
+    enum class KeyType(val keyName: String, val fileName: String) {
         Title("title_keys", "title.keys"), Prod("prod_keys", "prod.keys");
 
         companion object {
-            fun parse(keyName : String) = values().first { it.keyName == keyName }
-            fun parse(documentFile : DocumentFile) = values().first { it.fileName == documentFile.name }
-            fun parseOrNull(documentFile : DocumentFile) = values().find { it.fileName == documentFile.name }
+            fun parse(keyName: String) = values().first { it.keyName == keyName }
+            fun parse(file: File) = values().first { it.fileName == file.name }
+            fun parseOrNull(file: File) = values().find { it.fileName == file.name }
         }
     }
 
-    fun importFromLocation(context : Context, searchLocation : Uri) = importFromDirectory(context, DocumentFile.fromTreeUri(context, searchLocation)!!)
+    fun importFromLocation(context: Context, searchLocation: String) =
+        importFromDirectory(File(searchLocation), context)
 
-    private fun importFromDirectory(context : Context, directory : DocumentFile) {
-        directory.listFiles().forEach { file ->
-            if (file.isDirectory) {
-                importFromDirectory(context, file)
-            } else {
-                KeyType.parseOrNull(file)?.let { import(context, file.uri, it) }
+    private fun importFromDirectory(directory: File, context: Context) {
+        directory.listFiles()?.forEach { file ->
+            if (!file.isDirectory) {
+                KeyType.parseOrNull(file)?.let { import(file, it, context) }
             }
         }
     }
@@ -47,58 +37,43 @@ object KeyReader {
     /**
      * Reads keys file, trims and writes to internal app data storage, it makes sure file is properly formatted
      */
-    fun import(context : Context, uri : Uri, keyType : KeyType) : ImportResult {
-        Log.i(Tag, "Parsing ${keyType.name} $uri")
+    fun import(file: File, keyType: KeyType, context: Context): ImportResult {
+        Log.i(Tag, "Parsing ${keyType.name} ${file.absolutePath}")
 
-        if (!DocumentFile.isDocumentUri(context, uri))
+        if (!file.exists())
             return ImportResult.InvalidInputPath
 
-val outputDirectory = File(context.filesDir, "keys")
-if (!outputDirectory.exists()) {
-    outputDirectory.mkdir()
-}
-val outputFile = File(outputDirectory, "prod.keys")
-val outputStream = FileOutputStream(outputFile)
-inputStream.copyTo(outputStream)
-outputStream.close()
-
-        val outputDirectory = File("${context.filesDir.canonicalFile}/keys/")
-        if (!outputDirectory.exists())
-            outputDirectory.mkdirs()
-
-        val outputFile = File(outputDirectory, keyType.fileName)
-        val tmpOutputFile = File("${outputFile}.tmp")
+        val outputFile = File("file:///android_asset/keys/${keyType.fileName}")
+        val tmpOutputFile = File("${outputFile.absolutePath}.tmp")
         var valid = false
 
-        context.contentResolver.openInputStream(uri).use { inputStream ->
+        file.bufferedReader().useLines { lines ->
             tmpOutputFile.bufferedWriter().use { writer ->
-                valid = inputStream!!.bufferedReader().useLines {
-                    for (line in it) {
-                        if (line.startsWith(";") || line.isBlank()) continue
+                valid = lines.all { line ->
+                    if (line.startsWith(";") || line.isBlank()) return@all true
 
-                        val pair = line.split("=")
-                        if (pair.size != 2)
-                            return@useLines false
+                    val pair = line.split("=")
+                    if (pair.size != 2)
+                        return@all false
 
-                        val key = pair[0].trim()
-                        val value = pair[1].trim()
-                        when (keyType) {
-                            KeyType.Title -> {
-                                if (key.length != 32 && !isHexString(key))
-                                    return@useLines false
-                                if (value.length != 32 && !isHexString(value))
-                                    return@useLines false
-                            }
-                            KeyType.Prod -> {
-                                if (!key.contains("_"))
-                                    return@useLines false
-                                if (!isHexString(value))
-                                    return@useLines false
-                            }
+                    val key = pair[0].trim()
+                    val value = pair[1].trim()
+                    when (keyType) {
+                        KeyType.Title -> {
+                            if (key.length != 32 && !isHexString(key))
+                                return@all false
+                            if (value.length != 32 && !isHexString(value))
+                                return@all false
                         }
-
-                        writer.append("$key=$value\n")
+                        KeyType.Prod -> {
+                            if (!key.contains("_"))
+                                return@all false
+                            if (!isHexString(value))
+                                return@all false
+                        }
                     }
+
+                    writer.append("$key=$value\n")
                     true
                 }
             }
@@ -107,13 +82,21 @@ outputStream.close()
         val cleanup = {
             try {
                 tmpOutputFile.delete()
-            } catch (_ : Exception) {
+            } catch (_: Exception) {
             }
         }
 
         if (!valid) {
             cleanup()
             return ImportResult.InvalidKeys
+        }
+
+        context.assets.openFd(keyType.fileName).createOutputStream().buffered().let {
+            tmpOutputFile.inputStream().use { input ->
+                it.write(input.readBytes())
+            }
+            it.flush()
+            it.close()
         }
 
         if (outputFile.exists() && !outputFile.delete()) {
@@ -129,7 +112,7 @@ outputStream.close()
         return ImportResult.Success
     }
 
-    private fun isHexString(str : String) : Boolean {
+    private fun isHexString(str: String): Boolean {
         for (c in str)
             if (!(c in '0'..'9' || c in 'a'..'f' || c in 'A'..'F')) return false
         return true
