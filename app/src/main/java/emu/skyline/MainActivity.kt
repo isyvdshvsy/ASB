@@ -98,7 +98,6 @@ class MainActivity : AppCompatActivity() {
     private fun AppItem.toViewItem() = AppViewItem(layoutType, this, ::selectStartGame, ::selectShowGameDialog)
 
     override fun onCreate(savedInstanceState : Bundle?) {
-super.onCreate(savedInstanceState)
 
     val assetManager = applicationContext.assets
     val inputStream = assetManager.open("prod.keys")
