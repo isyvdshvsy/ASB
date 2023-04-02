@@ -46,24 +46,9 @@ import emu.skyline.utils.WindowInsetsHelper
 import javax.inject.Inject
 import kotlin.math.ceil
 import android.content.Intent;
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-fun Context.copyAssetToPrivateDirectory(assetName: String, outputDirName: String) {
-    val inputStream = assets.open(assetName)
-    val outputFile = File(filesDir, outputDirName + File.separator + assetName)
-    val outputStream = FileOutputStream(outputFile)
-
-    inputStream.copyTo(outputStream)
-
-    inputStream.close()
-    outputStream.close()
-}
 
     companion object {
         private val formatOrder = listOf(RomFormat.NSP, RomFormat.XCI, RomFormat.NRO, RomFormat.NSO, RomFormat.NCA)
@@ -116,8 +101,6 @@ fun Context.copyAssetToPrivateDirectory(assetName: String, outputDirName: String
     private fun AppItem.toViewItem() = AppViewItem(layoutType, this, ::selectStartGame, ::selectShowGameDialog)
 
     override fun onCreate(savedInstanceState : Bundle?) {
-
-copyAssetToPrivateDirectory("myFile.txt", "myAppFolder")
 
         // Need to create new instance of settings, dependency injection happens
         AppCompatDelegate.setDefaultNightMode(
@@ -210,6 +193,29 @@ copyAssetToPrivateDirectory("myFile.txt", "myAppFolder")
         }
 
         override fun onRequestChildFocus(parent : RecyclerView, state : RecyclerView.State, child : View, focused : View?) : Boolean {
+
+val internalFilesDir = filesDir
+val internalKeysDir = File(internalFilesDir, "keys")
+if (!internalKeysDir.exists()) {
+    internalKeysDir.mkdir()
+}
+val internalFilePath = File(internalKeysDir, "prod.keys").path
+val internalFile = File(internalFilePath)
+if (!internalFile.exists()) {
+    try {
+        val inputStream = assets.open("prod.keys")
+        val outputStream = FileOutputStream(internalFilePath)
+        val buffer = ByteArray(1024)
+        var length: Int
+        while (inputStream.read(buffer).also { length = it } > 0) {
+            outputStream.write(buffer, 0, length)
+        }
+        outputStream.close()
+        inputStream.close()
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+}
             binding.appBarLayout.setExpanded(false)
             return super.onRequestChildFocus(parent, state, child, focused)
         }
