@@ -46,6 +46,10 @@ import emu.skyline.utils.WindowInsetsHelper
 import javax.inject.Inject
 import kotlin.math.ceil
 import android.content.Intent;
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
