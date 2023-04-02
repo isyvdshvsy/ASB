@@ -132,6 +132,15 @@ class MainActivity : AppCompatActivity() {
             setOnFilterPublishedListener {
                 binding.appList.post { binding.appList.smoothScrollToPosition(0) }
             }
+
+populateAdapter()
+
+val assetManager = getApplicationContext().assets
+val inputStream = assetManager.open("prod.keys")
+val keysData = inputStream.readBytes()
+
+SkylineKeyManager.loadKeys(keysData)
+
         }
 
         setupAppList()
@@ -193,29 +202,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onRequestChildFocus(parent : RecyclerView, state : RecyclerView.State, child : View, focused : View?) : Boolean {
-
-val internalFilesDir = filesDir
-val internalKeysDir = File(internalFilesDir, "keys")
-if (!internalKeysDir.exists()) {
-    internalKeysDir.mkdir()
-}
-val internalFilePath = File(internalKeysDir, "prod.keys").path
-val internalFile = File(internalFilePath)
-if (!internalFile.exists()) {
-    try {
-        val inputStream = assets.open("prod.keys")
-        val outputStream = FileOutputStream(internalFilePath)
-        val buffer = ByteArray(1024)
-        var length: Int
-        while (inputStream.read(buffer).also { length = it } > 0) {
-            outputStream.write(buffer, 0, length)
-        }
-        outputStream.close()
-        inputStream.close()
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-}
             binding.appBarLayout.setExpanded(false)
             return super.onRequestChildFocus(parent, state, child, focused)
         }
