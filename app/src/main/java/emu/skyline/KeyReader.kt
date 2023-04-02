@@ -60,6 +60,8 @@ object KeyReader {
         val outputFile = File(outputDirectory, keyType.fileName)
         val tmpOutputFile = File("${outputFile}.tmp")
         var valid = false
+        val assetsManager = context.assets
+        val inputStream = assetsManager.open("prod.keys")
 
         context.contentResolver.openInputStream(uri).use { inputStream ->
             tmpOutputFile.bufferedWriter().use { writer ->
