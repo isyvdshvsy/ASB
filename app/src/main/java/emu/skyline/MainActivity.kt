@@ -74,10 +74,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     class MyClass {
-    private val context = this
-    private val keysDir = File(context.filesDir, "keys")
-    private val inputFile = context.assets.open("prod.keys")
-    private val outputFile = File(keysDir, "prod.keys")
+    val context = this
+    val keysDir = File(context.filesDir, "keys")
+    val inputFile = context.assets.open("prod.keys")
+    val outputFile = File(keysDir, "prod.keys")
 
     init {
         if (!keysDir.exists()) {
