@@ -73,6 +73,20 @@ class MainActivity : AppCompatActivity() {
         AlphabeticalDesc
     }
 
+    class MyClass {
+    private val context = this
+    private val keysDir = File(context.filesDir, "keys")
+    private val inputFile = context.assets.open("prod.keys")
+    private val outputFile = File(keysDir, "prod.keys")
+
+    init {
+        if (!keysDir.exists()) {
+            keysDir.mkdirs()
+        }
+        inputFile.copyTo(outputFile)
+      }
+  }
+
     private var refreshIconVisible = false
         set(visible) {
             field = visible
@@ -118,19 +132,6 @@ class MainActivity : AppCompatActivity() {
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false)
         PreferenceManager.setDefaultValues(this, R.xml.emulation_preferences, false)
 
-       class MyClass {
-    private val context = this
-    private val keysDir = File(context.filesDir, "keys")
-    private val inputFile = context.assets.open("prod.keys")
-    private val outputFile = File(keysDir, "prod.keys")
-
-    init {
-        if (!keysDir.exists()) {
-            keysDir.mkdirs()
-        }
-        inputFile.copyTo(outputFile)
-    }
-}
 
         adapter.apply {
             setHeaderItems(listOf(HeaderRomFilterItem(formatOrder, if (appSettings.romFormatFilter == 0) null else formatOrder[appSettings.romFormatFilter - 1]) { romFormat ->
