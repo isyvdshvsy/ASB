@@ -73,20 +73,6 @@ class MainActivity : AppCompatActivity() {
         AlphabeticalDesc
     }
 
-    class MyClass {
-    val myClass = MyClass(applicationContext)
-    val keysDir = File(context.filesDir, "keys")
-    val inputFile = context.assets.open("prod.keys")
-    val outputFile = File(keysDir, "prod.keys")
-
-    init {
-        if (!keysDir.exists()) {
-            keysDir.mkdirs()
-        }
-        inputFile.copyTo(outputFile)
-      }
-  }
-
     private var refreshIconVisible = false
         set(visible) {
             field = visible
@@ -114,6 +100,18 @@ class MainActivity : AppCompatActivity() {
     private fun AppItem.toViewItem() = AppViewItem(layoutType, this, ::selectStartGame, ::selectShowGameDialog)
 
     override fun onCreate(savedInstanceState : Bundle?) {
+    val context = this.applicationContext    // 替换为 applicationContext
+    val inputStream: InputStream = context.assets.open("prod.keys")
+    val outputFile = File(context.filesDir, "keys")
+
+    outputFile.outputStream().use { outputStream ->
+    val buffer = ByteArray(4 * 1024) // or other buffer size
+    var read: Int
+    while (inputStream.read(buffer).also { read = it } != -1) {
+        outputStream.write(buffer, 0, read)
+     }
+    outputStream.flush()
+  }
         // Need to create new instance of settings, dependency injection happens
         AppCompatDelegate.setDefaultNightMode(
             when ((AppSettings(this).appTheme)) {
