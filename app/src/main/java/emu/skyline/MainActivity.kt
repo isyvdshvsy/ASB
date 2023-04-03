@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     class MyClass {
-    val context = this
+    val myClass = MyClass(applicationContext)
     val keysDir = File(context.filesDir, "keys")
     val inputFile = context.assets.open("prod.keys")
     val outputFile = File(keysDir, "prod.keys")
