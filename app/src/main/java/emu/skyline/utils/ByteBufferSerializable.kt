@@ -7,6 +7,7 @@
 
 package emu.skyline.utils
 
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import java.nio.ByteBuffer
@@ -59,6 +60,24 @@ interface ByteBufferSerializable : Parcelable {
 
     class ParcelableCreator : Parcelable.ClassLoaderCreator<ByteBufferSerializable> {
         override fun createFromParcel(parcel : Parcel) : ByteBufferSerializable {
+            // 获取assets目录下的文件
+val inputStream = applicationContext.assets.open("filename.txt")
+
+// 通过FileOutputStream将文件保存到指定的目录
+val file = File(applicationContext.getExternalFilesDir(null), "filename.txt")
+val outputStream = FileOutputStream(file)
+
+// 复制文件内容
+val buffer = ByteArray(1024)
+var length: Int
+while (inputStream.read(buffer).also { length = it } > 0) {
+    outputStream.write(buffer, 0, length)
+}
+
+// 关闭流
+outputStream.flush()
+outputStream.close()
+inputStream.close()
             val kClass = javaClass.classLoader?.loadClass(parcel.readString())!!.kotlin
             val byteArray = ByteArray(ByteBufferSerializationData.getSerializationData(kClass).bytes)
             parcel.readByteArray(byteArray)
